@@ -39,9 +39,13 @@ def main():
             print(obj)
             print('Try Again!')
             common.print_star(150)
+            input('Press enter to continue')
+            common.print_star(150)
             continue
         possible_moves = obj.get_possible_moves() if obj.type_ != 'Horse' else obj.get_horse_moves()
         print(', '.join(possible_moves))
+        common.print_star(150)
+        input('Press enter to continue')
         common.print_star(150)
 
 
