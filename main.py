@@ -34,7 +34,7 @@ def main():
             print(obj)
             break
         possible_moves = obj.get_possible_moves()
-        # print(possible_moves)
+        print(possible_moves)
 
 
 if __name__ == '__main__':
