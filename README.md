@@ -31,14 +31,14 @@ Exp: 'D6, E6, E5, E4, D4, C4, C5, C6'<br>
 - Run command 'pytest -v' (v is for verbose).<br>
 
 <h4>Project Structure</h4>
-- <b>src:</b> Containts the main logic and common utilities
-- <b>test:</b> Containts all the testcases.
-- <b>main.py:</b> Main entry point.
-- <b>README.md:</b> Markdown file for the documentation. (Currently you are reading this file!! :))
+- <b>src:</b> Containts the main logic and common utilities.<br>
+- <b>test:</b> Containts all the testcases.<br>
+- <b>main.py:</b> Main entry point.<br>
+- <b>README.md:</b> Markdown file for the documentation. (Currently you are reading this file!! :)).<br>
 - <b>requirements.py:</b> Contains all the required third party packages.<br>
 
 <h4>Contact Details</h4>
-- <b>Name:</b> Parth Kansara
-- <b>Mobile:</b> +91 9409116872, +91 8849291401
-- <b>Email:</b> <a href="mailto:parthkansara11@gmail.com">parthkansara11@gmail.com</a>
-- <b>LinkedIn:</b> <a href="https://www.linkedin.com/in/parth-kansara-1a579186/">Parth Kansara</a>
+- <b>Name:</b> Parth Kansara<br>
+- <b>Mobile:</b> +91 9409116872, +91 8849291401<br>
+- <b>Email:</b> <a href="mailto:parthkansara11@gmail.com">parthkansara11@gmail.com</a><br>
+- <b>LinkedIn:</b> <a href="https://www.linkedin.com/in/parth-kansara-1a579186/">Parth Kansara</a><br>
