@@ -14,7 +14,7 @@ ONE_MOVE = 1
 FULL_MOVE = 8
 HORSE_MOVE = 2.5
 
-IS_DEBUG = True
+IS_DEBUG = False
 
 
 class UnsupportedChessPiece(Exception):

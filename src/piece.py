@@ -17,9 +17,9 @@ class Piece:
                 f'Error: Unsupported chess piece type: {type_}\n'
                 'Supported types are any one of King, Queen, Bishop, Horse, Rook or Pawn.\n')
         if x_position not in range(common.MIN_X, common.MAX_X + 1) or \
-                y_position not in range(common.MIN_Y, common.MAX_Y):
-            raise common.UnsupportedChessPiece(
-                f'Error: Unsupported chess cell position: {x_position}{y_position}\n'
+                y_position not in range(common.MIN_Y, common.MAX_Y + 1):
+            raise common.UnsupportedChessCell(
+                f'Error: Unsupported chess cell position: {chr(x_position)}{y_position}\n'
                 'Supported positions are any one from A1 to A8, B1 to B8 ... H1 to H8')
 
         self.type_ = type_
@@ -50,7 +50,7 @@ class Piece:
                     print('Moves cross ways')
                 possible_moves.extend(self.__get_range(min_x, max_x, min_y, max_y, is_cross=True))
 
-        return ', '.join(possible_moves)
+        return possible_moves
 
     def __get_range(self, min_x, max_x, min_y, max_y, is_cross=False):
         if not is_cross:
@@ -81,7 +81,28 @@ class Piece:
                 i += 1
             return ret_list
 
-    # def get_horse_moves(self):
-    #     possible_moves = []
-    #
-    #     return possible_moves
+    def get_horse_moves(self):
+        possible_moves = []
+
+        if self.x_position + 2 <= common.MAX_X:
+            if self.y_position - 1 >= common.MIN_Y:
+                possible_moves.append(chr(self.x_position + 2) + str(self.y_position - 1))
+            if self.y_position + 1 <= common.MAX_Y:
+                possible_moves.append(chr(self.x_position + 2) + str(self.y_position + 1))
+        if self.x_position - 2 >= common.MIN_X:
+            if self.y_position - 1 >= common.MIN_Y:
+                possible_moves.append(chr(self.x_position - 2) + str(self.y_position - 1))
+            if self.y_position + 1 <= common.MAX_Y:
+                possible_moves.append(chr(self.x_position - 2) + str(self.y_position + 1))
+        if self.y_position + 2 <= common.MAX_Y:
+            if self.x_position - 1 >= common.MIN_X:
+                possible_moves.append(chr(self.x_position - 1) + str(self.y_position + 2))
+            if self.x_position + 1 <= common.MAX_X:
+                possible_moves.append(chr(self.x_position + 1) + str(self.y_position + 2))
+        if self.y_position - 2 >= common.MIN_Y:
+            if self.x_position - 1 >= common.MIN_X:
+                possible_moves.append(chr(self.x_position - 1) + str(self.y_position - 2))
+            if self.x_position + 1 <= common.MAX_X:
+                possible_moves.append(chr(self.x_position + 1) + str(self.y_position - 2))
+
+        return possible_moves

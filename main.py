@@ -35,10 +35,13 @@ def main():
     while True:
         result, obj = take_input_and_validate()
         if not result:
+            common.print_star(150)
             print(obj)
-            break
+            print('Try Again!')
+            common.print_star(150)
+            continue
         possible_moves = obj.get_possible_moves() if obj.type_ != 'Horse' else obj.get_horse_moves()
-        print(possible_moves)
+        print(', '.join(possible_moves))
         common.print_star(150)
 
 
