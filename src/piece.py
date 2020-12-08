@@ -4,50 +4,51 @@ from src import common
 
 
 class Piece:
-    pieces = {'King': {'move': 1},
-              'Queen': {'move': 8},
-              'Bishop': {'move': 8, 'direction': ['C']},
-              'Horse': {'move': 2.5, 'direction': ['V', 'H']},
-              'Rook': {'move': 8, 'direction': ['V', 'H']},
-              'Pawn': {'move': 1, 'direction': ['V']}}
+    pieces = {'King': {'move': common.ONE_MOVE},
+              'Queen': {'move': common.FULL_MOVE},
+              'Bishop': {'move': common.FULL_MOVE, 'direction': [common.CROSS]},
+              'Horse': {'move': common.HORSE_MOVE, 'direction': [common.VERTICAL, common.HORIZONTAL]},
+              'Rook': {'move': common.FULL_MOVE, 'direction': [common.VERTICAL, common.HORIZONTAL]},
+              'Pawn': {'move': common.ONE_MOVE, 'direction': [common.VERTICAL]}}
 
     def __init__(self, type_, x_position, y_position):
         if type_ not in self.pieces:
             raise common.UnsupportedChessPiece(
                 f'Error: Unsupported chess piece type: {type_}\n'
                 'Supported types are any one of King, Queen, Bishop, Horse, Rook or Pawn.\n')
-        if x_position not in 'ABCDEFGH' or y_position not in range(1, 9):
+        if x_position not in range(common.MIN_X, common.MAX_X + 1) or \
+                y_position not in range(common.MIN_Y, common.MAX_Y):
             raise common.UnsupportedChessPiece(
                 f'Error: Unsupported chess cell position: {x_position}{y_position}\n'
                 'Supported positions are any one from A1 to A8, B1 to B8 ... H1 to H8')
+
         self.type_ = type_
-        self.x_position = ord(x_position)
+        self.x_position = x_position
         self.y_position = y_position
         self.step_move = self.pieces.get(type_).get('move')
-        self.direction = self.pieces.get(type_).get('direction', ['V', 'H', 'C'])
+        self.direction = self.pieces.get(type_).get('direction', common.ALL_DIRECTIONS)
 
     def get_possible_moves(self):
         possible_moves = []
 
-        min_y = self.y_position - self.step_move
-        max_y = self.y_position + self.step_move
-        min_y = min_y if min_y >= 1 else 1
-        max_y = max_y if max_y <= 8 else 8
-        min_x = self.x_position - self.step_move
-        max_x = self.x_position + self.step_move
-        min_x = min_x if min_x >= 65 else 65
-        max_x = max_x if max_x <= 72 else 72
+        min_y = max(self.y_position - self.step_move, common.MIN_Y)
+        max_y = min(self.y_position + self.step_move, common.MAX_Y)
+        min_x = max(self.x_position - self.step_move, common.MIN_X)
+        max_x = min(self.x_position + self.step_move, common.MAX_X)
 
         for direction in self.direction:
-            if direction == 'V':
-                print('Moves vertical')
+            if direction == common.VERTICAL:
+                if common.IS_DEBUG:
+                    print('Moves vertical')
                 possible_moves.extend(self.__get_range(self.x_position, self.x_position, min_y, max_y))
-            elif direction == 'H':
-                print('Moves horizontal')
+            elif direction == common.HORIZONTAL:
+                if common.IS_DEBUG:
+                    print('Moves horizontal')
                 possible_moves.extend(self.__get_range(min_x, max_x, self.y_position, self.y_position))
-            elif direction == 'C':
-                print('Moves cross ways')
-                possible_moves.extend(self.__get_range(min_x, max_x, min_y, max_y))
+            elif direction == common.CROSS:
+                if common.IS_DEBUG:
+                    print('Moves cross ways')
+                possible_moves.extend(self.__get_range(min_x, max_x, min_y, max_y, is_cross=True))
 
         return ', '.join(possible_moves)
 
@@ -57,7 +58,30 @@ class Piece:
                     self.x_position != i or self.y_position != j]
         else:
             pass
-            # ret_list = []
-            # while True:
-            #
-            # return  ret_list
+            ret_list = []
+            i = 1
+            while True:
+                count = 0
+                if self.x_position - i >= min_x:
+                    if self.y_position - i >= min_y:
+                        ret_list.append(chr(self.x_position - i) + str(self.y_position - i))
+                        count += 1
+                    if self.y_position + i <= max_y:
+                        ret_list.append(chr(self.x_position - i) + str(self.y_position + i))
+                        count += 1
+                if self.x_position + i <= max_x:
+                    if self.y_position - i >= min_y:
+                        ret_list.append(chr(self.x_position + i) + str(self.y_position - i))
+                        count += 1
+                    if self.y_position + i <= max_y:
+                        ret_list.append(chr(self.x_position + i) + str(self.y_position + i))
+                        count += 1
+                if count == 0:
+                    break
+                i += 1
+            return ret_list
+
+    # def get_horse_moves(self):
+    #     possible_moves = []
+    #
+    #     return possible_moves
