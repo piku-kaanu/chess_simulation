@@ -22,7 +22,7 @@ def take_input_and_validate():
         piece_obj = piece.Piece(piece_type, ord(x_position), int(y_position))
         return True, piece_obj
     # TODO: Need to prepare proper error message!
-    except common.UnsupportedChessPiece as e:
+    except (common.UnsupportedChessPiece, common.UnsupportedChessCell) as e:
         return False, e
     except Exception as e:
         return False, 'Value should be in proper format!'
